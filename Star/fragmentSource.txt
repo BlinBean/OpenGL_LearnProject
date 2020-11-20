@@ -1,7 +1,13 @@
 #version 330 core												
 out vec4 FragColor;												
 in vec4 vertexColor;											
-//uniform vec4 ourColor;											
+in vec2 TexCoord;
+//uniform vec4 ourColor;	
+uniform sampler2D ourTexture;//2d纹理
+uniform sampler2D ourFace;//2d纹理
 void main(){
-	FragColor = vertexColor;
+//	FragColor = vertexColor;
+//	FragColor=texture(ourTexture,TexCoord)*texture(ourFace,TexCoord)*vertexColor;//outTexture上的texCoord（对应UV）的颜色
+//	FragColor=texture(ourTexture,TexCoord)+texture(ourFace,TexCoord)/4;//outTexture上的texCoord（对应UV）的颜色
+	FragColor=mix(texture(ourTexture,TexCoord),texture(ourFace,TexCoord),0.2);//outTexture上的texCoord（对应UV）的颜色
 }	
