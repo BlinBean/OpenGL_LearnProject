@@ -7,6 +7,12 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
+
+
 
 //#pragma region shaderCode
 //const char* vertexShaderSource =
@@ -172,8 +178,9 @@ int main(int argc,char* argv[]) {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6*sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-
-
+	//位移矩阵
+	glm::mat4 trans;
+	trans=glm::translate(trans,glm::vec3(-1.,0,0));
 	while (!glfwWindowShouldClose(window))//是否关闭窗口
 	{
 		//input
@@ -201,6 +208,7 @@ int main(int argc,char* argv[]) {
 		//向shader的uniform传输数据
 		glUniform1i(glGetUniformLocation(myShader->ID,"ourTexture"),0);
 		glUniform1i(glGetUniformLocation(myShader->ID,"ourFace"),3);
+		glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "transform"),1,GL_FALSE,glm::value_ptr(trans));
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);//画成三角//从第0个开始画，画6个顶点（三角）
 			//画出EBO
