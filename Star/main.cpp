@@ -178,9 +178,11 @@ int main(int argc,char* argv[]) {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6*sizeof(float)));
 	glEnableVertexAttribArray(2);
 
-	//Î»ÒÆ¾ØÕó
+	//¾ØÕó
 	glm::mat4 trans;
-	trans=glm::translate(trans,glm::vec3(-1.,0,0));
+	trans = glm::translate(trans, glm::vec3(0.5, -0.5, 0));
+	trans = glm::rotate(trans,(float)45.0,glm::vec3(0,0,1));
+	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
 	while (!glfwWindowShouldClose(window))//ÊÇ·ñ¹Ø±Õ´°¿Ú
 	{
 		//input
