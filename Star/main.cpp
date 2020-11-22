@@ -178,11 +178,19 @@ int main(int argc,char* argv[]) {
 	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(GL_FLOAT), (void*)(6*sizeof(float)));
 	glEnableVertexAttribArray(2);
 
+#pragma region MyRegion
 	//矩阵
-	glm::mat4 trans;
-	trans = glm::translate(trans, glm::vec3(0.5, -0.5, 0));
-	trans = glm::rotate(trans,(float)45.0,glm::vec3(0,0,1));
-	trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+	//glm::mat4 trans;
+	//trans = glm::translate(trans, glm::vec3(0.5, -0.5, 0));
+	//trans = glm::rotate(trans,(float)45.0,glm::vec3(0,0,1));
+	//trans = glm::scale(trans, glm::vec3(0.5, 0.5, 0.5));
+	glm::mat4 modelMat,viewMat,projMat;
+	modelMat = glm::rotate(modelMat, (float)-55, glm::vec3(1, 0, 0));
+	viewMat = glm::translate(viewMat,glm::vec3(0,0,-3));
+	projMat = glm::perspective(45.0f, 800.0f/600, 0.1f, 100.0f);
+	//-----------------
+#pragma endregion
+
 	while (!glfwWindowShouldClose(window))//是否关闭窗口
 	{
 		//input
@@ -210,7 +218,10 @@ int main(int argc,char* argv[]) {
 		//向shader的uniform传输数据
 		glUniform1i(glGetUniformLocation(myShader->ID,"ourTexture"),0);
 		glUniform1i(glGetUniformLocation(myShader->ID,"ourFace"),3);
-		glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "transform"),1,GL_FALSE,glm::value_ptr(trans));
+		//glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "transform"),1,GL_FALSE,glm::value_ptr(modelMat));
+		glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "modelMat"), 1, GL_FALSE, glm::value_ptr(modelMat));
+		glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "viewMat"), 1, GL_FALSE, glm::value_ptr(viewMat));
+		glUniformMatrix4fv(glGetUniformLocation(myShader->ID, "projMat"), 1, GL_FALSE, glm::value_ptr(projMat));
 
 		//glDrawArrays(GL_TRIANGLES, 0, 6);//画成三角//从第0个开始画，画6个顶点（三角）
 			//画出EBO
